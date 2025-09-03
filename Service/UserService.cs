@@ -14,6 +14,9 @@ internal class UserService
 
     public bool Register(string username, string password, DateTime birthDate)
     {
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            return false;
+
         if (_context.Users.Any(u => u.Username == username))
             return false;
 
@@ -30,25 +33,20 @@ internal class UserService
     }
     public User? Login(string username, string password)
     {
-        return _context.Users
-            .FirstOrDefault(u => u.Username == username && u.Password == password);
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password)) return null;
+            
+        return _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
     }
-    public bool UpdatePassword(int userId, string newPassword)
+    public void UpdateUser(int userId, string? password, DateTime? birthDate)
     {
         var user = _context.Users.Find(userId);
-        if (user == null) return false;
+        if (user == null) return;
 
-        user.Password = newPassword;
-        _context.SaveChanges();
-        return true;
-    }
-    public bool UpdateBirthDate(int userId, DateTime birthDate)
-    {
-        var user = _context.Users.Find(userId);
-        if (user == null) return false;
+        if (!string.IsNullOrEmpty(password))
+            user.Password = password;
+        if (birthDate is not null)
+            user.Birthdate = birthDate.Value;
 
-        user.Birthdate = birthDate;
         _context.SaveChanges();
-        return true;
     }
 }

@@ -6,6 +6,7 @@ internal class Result
     public int UserId { get; set; }
     public int? CategoryId { get; set; }
     public int Score { get; set; }
+    public int Attempt { get; set; }
 
     public virtual User User { get; set; }
     public virtual Category? Category { get; set; }

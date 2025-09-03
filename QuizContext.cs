@@ -16,7 +16,7 @@ internal class QuizContext : DbContext
     public QuizContext(string connectionString)
     {
         _connectionString = connectionString;
-        Database.EnsureDeleted();
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
@@ -96,10 +96,11 @@ internal class QuizContext : DbContext
         modelBuilder
             .Entity<Result>()
             .HasOne(r => r.Category)
-            .WithMany(q => q.Results)
-            .HasForeignKey(r => r.QuizId)
+            .WithMany(c => c.Results)
+            .HasForeignKey(r => r.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);
 
+        #region Add Data
         // Categories
         modelBuilder.Entity<Category>().HasData(
             new { Id = 1, Name = "Mathematics" },
@@ -751,5 +752,6 @@ internal class QuizContext : DbContext
             new { Id = 359, Text = "Radioactive decay", IsCorrect = false, QuestionId = 90 },
             new { Id = 360, Text = "Nuclear reaction", IsCorrect = false, QuestionId = 90 }
         );
+        #endregion
     }
 }

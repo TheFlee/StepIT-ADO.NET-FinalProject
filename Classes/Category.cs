@@ -6,4 +6,5 @@ internal class Category
     public string Name { get; set; }
 
     public ICollection<Question> Questions { get; set; }
+    public ICollection<Result> Results { get; set; }
 }
