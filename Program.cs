@@ -280,7 +280,6 @@ while (true)
 
                 categories = db.Categories.ToList();
 
-                // Add a "Mixed" option
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("Available Categories:");
                 Console.ResetColor();
